@@ -6,10 +6,10 @@
 
 (defn left-widget [data]
   {:fx/type :v-box
-   :alignment :center
-   :children [(point-chart-widget data) (current-list-label-widget data) (current-list-widget data)]})
+   :alignment :top-center
+   :children [(current-list-label-widget data) (current-list-widget data)]})
 
 (defn list-view-widget [data]
   {:fx/type :h-box
-   :alignment :center
-   :children [(left-widget data) unit-and-points-widget]})
+   :alignment :top-center
+   :children [(left-widget data) (point-chart-widget data) unit-and-points-widget]})

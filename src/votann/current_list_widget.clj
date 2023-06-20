@@ -6,6 +6,7 @@
          {:fx/type :v-box
           :padding 5
           :children [{:fx/type :label
+                      :style "-fx-font-size: 16px; -fx-font-weight: bold;"
                       :text (:name unit)}
                      {:fx/type :h-box
                       :alignment :center-left
@@ -19,6 +20,7 @@
                                                                     :points (:points unit)}}
                                   :text "Remove"}
                                  {:fx/type :label
+                                  :style "-fx-font-size: 16px;"
                                   :text (str (:points unit) "pts")}]}]})))
 
 (defn current-list-label-widget [{:keys [points]}]
@@ -30,23 +32,19 @@
                :text "Current List"}
               {:fx/type :h-box
                :alignment :center
-               :spacing 50
-               :children [{:fx/type :button
-                           :on-mouse-clicked {:event/type :event/restart-click}
-                           :on-key-pressed {:event/type :event/restart-enter}
-                           :text "Restart"}
-                          {:fx/type :label
+               :spacing 5
+               :children [{:fx/type :label
                            :style "-fx-font-size: 18px; -fx-font-weight: bold;"
                            :text (str points " pts")}
                           {:fx/type :button
-                           :on-mouse-clicked {:event/type :event/undo-unit-click}
-                           :on-key-pressed {:event/type :event/undo-unit-enter}
-                           :text "Undo"}]}
-              ]})
+                           :on-mouse-clicked {:event/type :event/export-list-click}
+                           :on-key-pressed {:event/type :event/export-list-enter}
+                           :text "Export"}]}]})
 
 (defn current-list-widget [{:keys [units]}]
   {:fx/type :scroll-pane
+   :pref-height 860
+   :pref-width 300
    :content {:fx/type :v-box
              :alignment :top-center
-             :pref-height 600
              :children (current-list units)}})

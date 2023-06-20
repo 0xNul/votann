@@ -28,6 +28,10 @@
     (swap! *list-units assoc :points (max 0 (- (:points @*list-units) (:points (:event/target e)))))
     (swap! *list-units update :units #(vec (concat (subvec % 0 (:index (:event/target e))) (subvec % (inc (:index (:event/target e)))))))))
 
+(defn export-list [_]
+  (if-not (empty? (get-in @*list-units [:units]))
+    (spit (str (.toString (java.time.Instant/now)) ".list") @*list-units)))
+
 (defn map-event-handler [e]
   (cond (= :event/undo-unit-click (:event/type e))
         (undo-points e)
@@ -51,4 +55,11 @@
         (add-unit e)
 
         (= :event/add-unit-enter (:event/type e))
-        (enter-event add-unit e)))
+        (enter-event add-unit e)
+
+        (= :event/export-list-click (:event/type e))
+        (export-list e)
+
+        (= :event/export-list-enter (:event/type e))
+        (enter-event export-list e)
+        ))

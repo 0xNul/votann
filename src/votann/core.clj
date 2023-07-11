@@ -9,6 +9,7 @@
   {:fx/type :stage
    :max-width 1253
    :max-height 860
+   :on-close-request (fn [_] (System/exit 0))
    :icons [(get-resource-path (str "leagues-of-votann/icon256x256.png"))
            (get-resource-path (str "leagues-of-votann/icon48x48.png"))
            (get-resource-path (str "leagues-of-votann/icon32x32.png"))]

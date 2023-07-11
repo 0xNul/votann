@@ -12,24 +12,19 @@
    {:name "Grimnyr"
     :units [(Unit. "x3" 75)]}
    {:name "Brokhyr Iron-Master"
-    :units [(Unit. "x3" 95)
-            (Unit. "x6" 190)]}
+    :units [(Unit. "x3" 95)]}
    {:name "Hearthkyn Warriors"
     :units [(Unit. "x10" 135)]}
    {:name "Einhyr Hearthguard"
-    :units [(Unit. "x5" 165)
-            (Unit. "x10" 330)]}
+    :units [(Unit. "x5" 165)]}
    {:name "Cthonian Beserks"
-    :units [(Unit. "x5" 135)
-            (Unit. "x10" 270)]}
+    :units [(Unit. "x5" 135)]}
    {:name "Hernkyn Pioneers"
-    :units [(Unit. "x3" 105)
-            (Unit. "x6" 210)]}
+    :units [(Unit. "x3" 105)]}
    {:name "Sagitaur"
     :units [(Unit. "x1" 120)]}
    {:name "Brokhyr Thunderkyn"
-    :units [(Unit. "x3" 95)
-            (Unit. "x6" 190)]}
+    :units [(Unit. "x3" 95)]}
    {:name "Hekaton Land Fortress"
     :units [(Unit. "x1" 245)]}])
 

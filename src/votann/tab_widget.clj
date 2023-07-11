@@ -24,5 +24,19 @@
     :closable false
     :content enhancements-view-widget}])
 
+(def codex-view-tab
+  [{:fx/type :tab
+    :text "Codex"
+    :closable false
+    :content {:fx/type :tab-pane
+              :tabs (vec (apply merge unit-view-tab enhancements-view-tab))}}])
+
+(def battle-simulator-view-tab
+  [{:fx/type :tab
+    :text "Battle Simulator"
+    :closable false
+    :content {:fx/type :label
+              :text "placeholder battle simulator page"}}])
+
 (defn tab-widget [data]
-  (vec (apply concat [(list-view-tab data) unit-view-tab enhancements-view-tab])))
+  (vec (apply concat [(list-view-tab data) codex-view-tab battle-simulator-view-tab])))

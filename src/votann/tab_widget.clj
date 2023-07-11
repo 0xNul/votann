@@ -5,19 +5,24 @@
             [votann.enhancements-widget :refer [enhancements-view-widget]]
             [cljfx.api :as fx]))
 
+(defn list-view-tab [data]
+  [{:fx/type :tab
+    :text "List"
+    :closable false
+    :content (list-view-widget data)}])
+
+(def unit-view-tab
+  (vec (for [unit get-models]
+         {:fx/type :tab
+          :text unit
+          :closable false
+          :content (unit-view-widget (unit-file-name unit))})))
+
+(def enhancements-view-tab
+  [{:fx/type :tab
+    :text "Enhancements"
+    :closable false
+    :content enhancements-view-widget}])
+
 (defn tab-widget [data]
-  (vec (apply merge
-              (vec (apply merge
-                          [{:fx/type :tab
-                            :text "List"
-                            :closable false
-                            :content (list-view-widget data)}]
-                          (vec (for [unit get-models]
-                                 {:fx/type :tab
-                                  :text unit
-                                  :closable false
-                                  :content (unit-view-widget (unit-file-name unit))}))))
-              [{:fx/type :tab
-                :text "Enhancements"
-                :closable false
-                :content enhancements-view-widget}])))
+  (vec (apply concat [(list-view-tab data) unit-view-tab enhancements-view-tab])))

@@ -1,12 +1,9 @@
 (ns votann.unit-widget
-  (:require [votann.util :refer [get-resource-path]]
-            [cljfx.api :as fx]))
+  (:require [votann.codex-view :refer [codex-page]]
+            [cljfx.api :as fx]
+            [cljfx.ext.web-view :as fx.ext.web-view]))
 
-(defn unit-view-widget [unit-file-name]
-  {:fx/type :scroll-pane
-   :content {:fx/type :v-box
-             :alignment :center
-             :children [{:fx/type :image-view
-                         :image (get-resource-path (str "leagues-of-votann/" unit-file-name "-front.png"))}
-                        {:fx/type :image-view
-                         :image (get-resource-path (str "leagues-of-votann/" unit-file-name "-back.png"))}]}})
+(defn unit-view-widget [model]
+  {:fx/type fx.ext.web-view/with-engine-props
+   :props {:content (codex-page model)}
+   :desc {:fx/type :web-view}})

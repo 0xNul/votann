@@ -5,15 +5,10 @@
             [clojure.string :as string]))
 
 (def get-models
-  (vec (for [model kin-models]
-         (:name model))))
-
-(def get-units
-    (->> (concat kin-models kin-enhancements)
-       (map #(for [unit (:units %)]
-               {:name (str (:name %) " " (:count unit))
-                :points (:points unit)}))
-       (apply concat)
+  (->> kin-models
+       (map (fn [model]
+              {:name (str (:name model) " " (:count (:points model)))
+               :points (:amount (:points model))}))
        vec))
 
 (defn get-resource-path [file]

@@ -1,5 +1,6 @@
 (ns votann.codex-view
-  (:require [hiccup2.core :as h]
+  (:require [clojure.string :as string]
+            [hiccup2.core :as h]
             [hiccup.page :as page]))
 
 (def stat-head
@@ -20,19 +21,19 @@
    [:th]
    [:th]])
 
-(def stat-body
+(defn stat-body [m t sv w ld oc]
   [:tr
-   [:td "5\""]
-   [:td "5"]
-   [:td "3+"]
-   [:td "5"]
-   [:td "7+"]
-   [:td "1"]])
+   [:td (str m "\"")]
+   [:td t]
+   [:td (str sv "+")]
+   [:td w]
+   [:td (str ld "+")]
+   [:td oc]])
 
-(def stat-table
+(defn stat-table [model]
    [:table
     stat-head
-    stat-body])
+    (stat-body (:m model) (:t model) (:sv model) (:w model) (:ld model) (:oc model))])
 
 (def stat-table-bottom
    [:table
@@ -45,20 +46,11 @@
 (defn stat-model-bottom [name]
   [:div {:class "stat-name-bottom"} [:h3 name]])
 
-(def stats
+(defn stats [model]
   [:stats
    [:div {:class "stat-container"}
-    stat-table
-    (stat-model "Brokhyr Iron-Master")]
-   [:div {:class "stat-container"}
-    stat-table
-    (stat-model "Kahl")]
-   [:div {:class "stat-container"}
-    stat-table-bottom
-    (stat-model-bottom "CORVs")]
-   [:div {:class "stat-container"}
-    stat-table-bottom
-    (stat-model-bottom "XX")]
+    (stat-table model)
+    (stat-model (:name model))]
    ])
 
 (def ranged-head
@@ -72,17 +64,6 @@
    [:th "AP"]
    [:th "D"]])
 
-(def ranged-body
-  [:tr
-   [:td {:class "icon"}]
-   [:td {:class "text"} "Autoch-pattern bolt pistol"]
-   [:td "12\""]
-   [:td "1"]
-   [:td "3+"]
-   [:td "4"]
-   [:td "0"]
-   [:td "1"]])
-
 (def melee-head
   [:tr
    [:th]
@@ -94,92 +75,159 @@
    [:th "AP"]
    [:th "D"]])
 
-(def melee-body
+(defn weapon-body [name abilities range a bs s ap d]
   [:tr
    [:td {:class "icon"}]
-   [:td {:class "text"} "Autoch-pattern bolt pistol"]
-   [:td "Melee"]
-   [:td "1"]
-   [:td "3+"]
-   [:td "4"]
-   [:td "0"]
-   [:td "1"]])
+   [:td {:class "text"}
+    name
+    [:br]
+    [:b (str "[" (string/join ", " abilities) "]")]]
+   [:td range]
+   [:td a]
+   [:td (str bs "+")]
+   [:td s]
+   [:td ap]
+   [:td d]])
 
-(def weapons
+(defn weapons [ranged melee]
   [:div {:class "weapons"}
-   [:table
-    ranged-head
-    ranged-body]
-   [:table
-    melee-head
-    melee-body]])
+   (if-not (empty? ranged)
+     [:table
+      ranged-head
+      (for [weapon ranged]
+        (weapon-body (:name weapon)
+                     (:abilities weapon)
+                     (str (:range weapon) "\"")
+                     (:a weapon)
+                     (:bs weapon)
+                     (:s weapon)
+                     (:ap weapon)
+                     (:d weapon)))])
 
-(def column-1
+   (if-not (empty? melee)
+     [:table
+      melee-head
+      (for [weapon melee]
+        (weapon-body (:name weapon)
+                     (:abilities weapon)
+                     "Melee"
+                     (:a weapon)
+                     (:bs weapon)
+                     (:s weapon)
+                     (:ap weapon)
+                     (:d weapon)))])])
+
+(defn column-1 [ranged-weapons melee-weapons]
   [:div {:id "column-1"}
-   weapons])
+   (weapons ranged-weapons melee-weapons)])
 
-(def abilities-head
+(defn abilities-head [header]
   [:tr
-   [:th {:class "text"} "Abilities"]])
+   [:th {:class "text"} header]])
 
-(def abilities-body
+(defn abilities-body [abilities]
+  (h/html
+   (if-not (empty? (:core abilities))
+     [:tr
+      [:td
+       [:p "CORE: "
+        [:b (string/join ", " (:core abilities))]]]])
+
+   (if-not (empty? (:faction abilities))
+     [:tr
+      [:td
+       [:p "FACTION: "
+        [:b (string/join ", " (:faction abilities))]]]])
+
+   (if-not (empty? (:other abilities))
+     [:tr
+      [:td
+       (for [other (:other abilities)]
+         [:p [:b (str (:name other) ": ")]
+          (:description other)
+          ])]])))
+
+(defn abilities [abilities]
+  [:table
+   (abilities-head "Abilities")
+   (abilities-body abilities)])
+
+(defn wargear-abilities-body [abilities]
   [:tr
-   [:td "CORE: Leader"]])
+   [:td
+    (for [ability abilities]
+      [:p [:b (str (:name ability) ": ")]
+       (:description ability)])]])
 
-(def abilities
-  [:div {:class "abilities"}
-   [:table
-    abilities-head
-    abilities-body]])
+(defn wargear-abilities [abilities]
+  (if-not (empty? abilities)
+    [:table
+     (abilities-head "Wargear Abilities")
+     (wargear-abilities-body abilities)]))
 
-(def column-2
+(defn shield [value]
+  [:div {:class ["shield-container"]}
+   [:div {:class "shield-text"} (str value "+") ]
+   [:div {:class "shield"}]])
+
+(defn invulnerable-save [ability]
+  (if-not (nil? ability)
+    (h/html
+     [:table
+      (abilities-head "Invulnerable Save")]
+     (shield ability))))
+
+(defn column-2 [model]
   [:div {:id "column-2"}
-   abilities])
+   [:div {:class "abilities"}
+    (abilities (:abilities model))
+    (wargear-abilities (:wargear-abilities (:abilities model)))
+    (invulnerable-save (:invulnerable-save (:abilities model)))]])
 
-(def keywords-model
+(defn keywords-model [keywords]
   [:div {:class "model"}
-   [:span "Keywords - All Models: Infanctry, Brokhyr Iron-Master | Brokhyr Iron-Master Model: Character"]])
+   [:span (str "KEYWORDS: " (string/join ", " keywords))]])
 
-(def keywords-faction
+(defn keywords-faction [keywords]
   [:div {:class "faction"}
-   [:div "Faction Keywords:"]
-   [:span "Leagues of Votann"]])
+   [:div "FACTION KEYWORDS:"]
+   [:span (string/join ", " keywords)]])
 
-(def keywords
+(defn keywords [keywords]
   [:div {:class "keywords"}
-   keywords-model
-   keywords-faction])
+   (keywords-model (:model keywords))
+   (keywords-faction (:faction keywords))])
 
 (def star
   [:div {:class "star"} ""])
 
-(def top
+(defn top [model]
   [:top
-   [:h1 "Uthar the Destined"]
-   stats])
+   [:h1 (:name model)]
+   (stats model)])
 
-(def content
+(defn content [model]
   [:content
-   column-1
-   column-2])
+   (column-1 (:ranged-weapons model) (:melee-weapons model))
+   (column-2 model)])
 
-(def bottom
+(defn bottom [model]
   [:bottom
-   keywords
+   (keywords (:keywords model))
    star])
 
 (def head
   [:head
    [:link {:rel "stylesheet" :href (votann.util/get-resource-path "css/style.css")}]])
 
-(def body
+(defn body [model]
   [:body
-   top
-   content
-   bottom])
+   (top model)
+   (content model)
+   (bottom model)])
 
-(def codex-page
+(defn codex-page [model]
   (page/html5
    (h/html
     head
-    body)))
+    (body model))))

@@ -1,5 +1,5 @@
 (ns votann.units-and-points-widget
-  (:require [votann.util :refer [get-units]]
+  (:require [votann.util :refer [get-models]]
             [cljfx.api :as fx]))
 
 
@@ -24,7 +24,7 @@
 
 
 (def unit-points-list-widget
-  (vec (for [unit get-units]
+  (vec (for [unit get-models]
          {:fx/type :v-box
           :padding 5
           :children [{:fx/type :label

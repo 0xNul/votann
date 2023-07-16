@@ -1,6 +1,6 @@
 (ns votann.tab_widget
   (:require [votann.list-widget :refer [list-view-widget]]
-            [votann.util :refer [get-models unit-file-name]]
+            [votann.codex :refer [kin-models]]
             [votann.unit-widget :refer [unit-view-widget]]
             [votann.enhancements-widget :refer [enhancements-view-widget]]
             [votann.codex-view :refer [codex-page]]
@@ -14,11 +14,11 @@
     :content (list-view-widget data)}])
 
 (def unit-view-tab
-  (vec (for [unit get-models]
+  (vec (for [model kin-models]
          {:fx/type :tab
-          :text unit
+          :text (:name model)
           :closable false
-          :content (unit-view-widget (unit-file-name unit))})))
+          :content (unit-view-widget model)})))
 
 (def enhancements-view-tab
   [{:fx/type :tab
@@ -31,15 +31,17 @@
     :text "Codex"
     :closable false
     :content {:fx/type :tab-pane
-              :tabs (vec (apply merge unit-view-tab enhancements-view-tab))}}])
+              :tabs [(apply merge unit-view-tab)]}}])
+
+(comment codex-view-tab)
 
 (def battle-simulator-view-tab
   [{:fx/type :tab
     :text "Battle Simulator"
     :closable false
     :content {:fx/type fx.ext.web-view/with-engine-props
-              :props {:content codex-page}
+              :props {:content (codex-page nil)}
               :desc {:fx/type :web-view}}}])
 
 (defn tab-widget [data]
-  (vec (apply concat [(list-view-tab data) battle-simulator-view-tab])))
+  (vec (apply concat [(list-view-tab data) codex-view-tab battle-simulator-view-tab])))

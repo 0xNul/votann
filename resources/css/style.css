@@ -28,8 +28,9 @@ stats {
 }
 
 content {
-    height: 573px;
-    display: block;
+    display: flex;
+    align-items: stretch;
+    min-height: 573px;
     margin-left: 50px;
     margin-right: 50px;
     border-left: solid;
@@ -42,7 +43,7 @@ content {
 #column-1, #column-2 {
     float: left;
     padding-top: 25px;
-    height: 550px;
+    margin-bottom: 50px;
 }
 
 #column-1 {
@@ -52,6 +53,11 @@ content {
 
 #column-2 table {
     width: 442px;
+}
+
+#column-2 p {
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 .weapons {
@@ -136,6 +142,7 @@ stats td {
     width: 47px;
     height: 47px;
     font-size: 24px;
+    font-weight: bold;
     margin-left: 8px;
     border: solid;
     border-color: #3c4b3f;
@@ -188,4 +195,35 @@ stats td {
     background-color: #e1e0e1;
     border: 2px solid #3c4b3f;
     transform: rotate(45deg);
+}
+
+.shield-container {
+    width: 55px;
+    height: 60px;
+    position: relative;
+    left: 365px;
+    bottom: 100px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #3c4b3f;
+    margin-bottom: -70px;
+}
+
+.shield-text {
+    position: relative;
+    top: 43px;
+    left: 4px;
+    z-index: 100;
+}
+
+.shield {
+    position: relative;
+    width: 100%;
+    height: 90%;
+    background-color: #e1e0e1;
+    border: 3px solid #3c4b3f;
+    border-radius: 0 0 70% 70%;
+    display: inline-block;
+    overflow: hidden;
 }

@@ -12,6 +12,6 @@
   {:fx/type ext-recreate-on-key-changed
    :key units
    :desc {:fx/type :pie-chart
-          :pref-width 623
+          :pref-width 725
           :title "Point Distribution"
           :data (chart-data units)}})

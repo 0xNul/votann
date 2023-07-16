@@ -5,7 +5,7 @@
             :url "https://www.gnu.org/licenses/gpl-3.0.en.html"}
   :dependencies [[org.clojure/clojure "1.11.1"]
                  [cljfx "1.7.23"]
-                 [org.openjfx/javafx-base "19"]]
+                 [hiccup "2.0.0-RC1"]]
   :main ^:skip-aot votann.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all

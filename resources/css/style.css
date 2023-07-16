@@ -1,0 +1,191 @@
+body {
+    margin: 0 auto;
+    width: 1340px;
+    background-color: #e1e0e1;
+}
+
+top h1 {
+    margin: 12px;
+    margin-left: 24px;
+}
+
+top {
+    height: 220px;
+    padding: 5px;
+    padding-left: 24px;
+    display: block;
+    color: white;
+    background-color: #552c0a;
+}
+
+li {
+    display: inline-block;
+}
+
+stats {
+    display: block;
+    margin-bottom: 12px;
+}
+
+content {
+    height: 573px;
+    display: block;
+    margin-left: 50px;
+    margin-right: 50px;
+    border-left: solid;
+    border-right: solid;
+    border-bottom: solid;
+    border-color: #3c4b3f;
+    border-radius: 0px 0px 0px 15px;
+}
+
+#column-1, #column-2 {
+    float: left;
+    padding-top: 25px;
+    height: 550px;
+}
+
+#column-1 {
+    border-right: solid;
+    border-color: #3c4b3f;
+}
+
+#column-2 table {
+    width: 442px;
+}
+
+.weapons {
+    width: 737px;
+}
+
+.abilities {
+    padding-left: 25px;
+}
+
+.abilities table {
+    width: 404px;
+}
+
+.abilities td {
+    padding: 4px;
+}
+
+.weapons th, .abilities th {
+    background-color: #3c4b3f;
+    color: white;
+    min-width: 48px;
+    padding: 4px;
+}
+
+.weapons td {
+    text-align: center;
+}
+
+.weapons tr:nth-child(odd){background-color: #d3d3d3;}
+
+
+table {
+    border-spacing: 0;
+    margin-bottom: 24px;
+}
+
+td {
+    border-bottom: dotted;
+    border-width: 2px;
+}
+
+td.icon {
+    border: none;
+    background-color: #e1e0e1;
+}
+
+th.text {
+    min-width: 335px;
+    text-align: left;
+}
+
+td.text {
+    text-align: left;
+}
+
+.stat-container {
+    width: 640px;
+    display: inline-block;
+}
+
+.stat-container table {
+    float: left;
+    margin-bottom: 0px;
+}
+
+.stat-name {
+    float: left;
+    margin: 0;
+    padding-top: 18px;
+}
+
+.stat-name-bottom {
+    float: left;
+}
+
+stats table {
+    border-spacing: 15px 0px;
+}
+
+stats td {
+    width: 47px;
+    height: 47px;
+    font-size: 24px;
+    margin-left: 8px;
+    border: solid;
+    border-color: #3c4b3f;
+    color: #3c4b3f;
+    background-color: #e9eae0;
+    border-radius: 10px 0px;
+    text-align: center;
+}
+
+.keywords {
+    margin-left: 78px;
+    position: relative;
+    bottom: 40px;
+}
+
+.keywords .model, .keywords .faction{
+    float: left;
+}
+
+.keywords .model {
+    width: 629px;
+    height: 54px;
+    background-color: #bcb8b8;
+    padding-top: 12px;
+    padding-left: 10px;
+    padding-right: 70px;
+    border: solid;
+    border-color: #3c4b3f;
+}
+
+.keywords .faction {
+    width: 395px;
+    height: 56px;
+    color: white;
+    background-color: black;
+    padding-top: 10px;
+    padding-left: 70px;
+    border-top: solid;
+    border-right: solid;
+    border-bottom: solid;
+    border-color: #3c4b3f;
+}
+
+.star {
+    width: 70px;
+    height: 70px;
+    position: relative;
+    left: 755px;
+    bottom: 40px;
+    background-color: #e1e0e1;
+    border: 2px solid #3c4b3f;
+    transform: rotate(45deg);
+}

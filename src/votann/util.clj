@@ -19,8 +19,6 @@
 (defn get-resource-path [file]
   (.toExternalForm (clojure.java.io/resource file)))
 
-(comment get-local-path)
-
 (defn unit-file-name [unit]
   (string/lower-case (string/replace unit " " "-")))
 

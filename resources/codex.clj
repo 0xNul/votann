@@ -91,23 +91,23 @@
                     :equipment ["Ancestral Wrath" "ancestral ward stave" "Autoch-pattern bolter" "close combat weapon"]}
  :leader ["Hearthkyn Warriors"]}
 
-{:name "Brokhyr Iron-Master"
+{:name "Brôkhyr Iron-Master"
  :abilities [:core ["Leader"]
              :faction ["Eye of the Ancestors"]
              :other [{:name "Multispectral Visor"
                       :description "While this model is leading a unit each time a model in that unit makes a ranged attack, add 1 to its Hit roll."}
-                     {:name "Brokhyr's Guild"
+                     {:name "Brôkhyr's Guild"
                       :description "At the end of your Movement phase, this unit can repair one friendly LEAGUES OF VOTANN VEHICLE or EXO-FRAME model within 3\" of it. That model regains up to D3 lost wounds, or up to 3 lost wounds instead if this unit contains an Ironkyn Assistant. Each model can only be repaired once per turn."}]
              :invulnerable-save nil]
- :keywords [:all-models ["Infantry" "Brokhyr Iron-master"]
+ :keywords [:all-models ["Infantry" "Brôkhyr Iron-master"]
             :model ["Character"]
             :faction ["Leagues of Votann"]]
- :quote "Iron-masters are the most accomplished Brokhyrs of their Kindred. In battle, they take on the duty of maintaining damaged Kin war engines, often aided by Ironkin and COG repair crews. These verteran Brokhyrs also bring their most powerful personal creations to war, taking satisfaction in unleashing them upon the foe."
+ :quote "Iron-masters are the most accomplished Brôkhyrs of their Kindred. In battle, they take on the duty of maintaining damaged Kin war engines, often aided by Ironkin and COG repair crews. These verteran Brôkhyrs also bring their most powerful personal creations to war, taking satisfaction in unleashing them upon the foe."
  :wargear-options []
- :unit-composition {:composition ["1 Brokhyr Iron-master" "1 Ironkin Assistant*" "3 E-COGs*"]
+ :unit-composition {:composition ["1 Brôkhyr Iron-master" "1 Ironkin Assistant*" "3 E-COGs*"]
                     :composition-notice ["If this unit's Iron-master is ever destroyed, all of this unit's Ironkyn Assistant and all remaining E-COGs are also destroyed."]
                     :equipment ["graviton rifle" "graviton hammer" "las-beam cutter" "close combat weapon" "Autoch-pattern bolt pistol" "close combat weapon" "plasma torch" "manipulator arms"]}
- :leader ["Hearthkyn Warriors" "Brokhyr Thunderkyn"]}
+ :leader ["Hearthkyn Warriors" "Brôkhyr Thunderkyn"]}
 
 {:name "Hearthkyn Warriors"
  :abilities [:faction ["Eye of the Ancestors"]
@@ -200,16 +200,16 @@
  :transport ["This model has a transport capacity of 6 LEAGUES OF VOTANN INFANTRY models. It cannot transport EXO-ARMOUR or EXO-FRAME models." "At the start of the Declare Battle Formations step. you can select one HEARTHKYN WARRIORS unit from your army and split it into two units, each containing 5 models (when splitting a unit in this way, make a note of which models form each of the two new units). One of these units must start hte battle embarked within this TRANSPORT; the other can start the battle embarked within another TRANSPORT, or it can be deployed as a seperate unit."]
  :leader []}
 
-{:name "Brokhyr Thunderkyn"
+{:name "Brôkhyr Thunderkyn"
  :abilities [:faction ["Eye of the Ancestors"]
              :other [{:name "Oathband Covering Fire"
                       :description "Each time you target this unit with the Fire Overwatch Stratagem, hits are scored on unmodified Hit rolls of 5+ when resolving that Stratagem"}]
              :invulnerable-save nil]
- :keywords [:model ["Infantry" "Exo-Frame" "Brokhyr Thunderkyn"]
+ :keywords [:model ["Infantry" "Exo-Frame" "Brôkhyr Thunderkyn"]
             :faction ["Leagues of Votann"]]
- :quote "When a Brokhyr hooks into a powerful exo-frame, they become Thunderkyn. Adapted from void-rigs used to maintain Kin spacecraft, these armoured exoskeletons exchange repair tools for massive heavy weapons, which the Brokhyr use to lay down withering covering fire for the Oathbands and to pick off enemey armour."
+ :quote "When a Brôkhyr hooks into a powerful exo-frame, they become Thunderkyn. Adapted from void-rigs used to maintain Kin spacecraft, these armoured exoskeletons exchange repair tools for massive heavy weapons, which the Brôkhyr use to lay down withering covering fire for the Oathbands and to pick off enemey armour."
  :wargear-options ["All models in this unit can each have their bolt cannon replaced with 1 graviton blast cannon." "All models in this unit can each have their bolt cannon replaced with 1 SP conversion beamer."]
- :unit-composition {:composition ["3-6 Brokhyr Thunderkyn"]
+ :unit-composition {:composition ["3-6 Brôkhyr Thunderkyn"]
                     :equipment ["bolt cannon" "close combat weapon"]}
  :leader []}
 
@@ -222,7 +222,7 @@
                                   :description "Ranged weapons equipped by models in the bearer's unit have the [IGNORES COVER] ability."}]
              :invulnerable-save nil
              :damaged {:name "1-5 Wounds Remaining"
-                       :description "While this model has 1-5 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll."}
+                       :description "While this model has 1-5 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll."}]
  :keywords [:model ["Vehicle" "Transport" "Hekaton Land Fortress"]
             :faction ["Leagues of Votann"]]
  :quote "The iconic battle tank and armoured transport of the Leagues of Votann, the Hekaton Land Fortress is a venerable and well-respected as it is powerful. With a fearsome arsenal of heavy weaponry and tremendously resilient armour - and with the ability to bear bands of Kin solidery into battle - it is a versatile military asset."

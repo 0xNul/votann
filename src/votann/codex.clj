@@ -4,7 +4,18 @@
   (:import [votann.records.points Points]))
 
 (def kin-models
-  [lov/uthar-the-destined])
+  [lov/uthar-the-destined
+   lov/khal
+   lov/einhyr-champion
+   lov/grimnyr
+   lov/brokyr-iron-master
+   lov/hearthkyn-warriors
+   lov/einhyr-hearthguard
+   lov/cthonian-beserks
+   lov/hernkyn-pioneers
+   lov/sagitaur
+   lov/brokyr-thunderkyn
+   lov/hekaton-land-fortress])
 
 ;; {:name "Uthar The Destined"
 ;;     :units [(Unit. "x1" 115)]}

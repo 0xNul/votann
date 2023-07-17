@@ -31,9 +31,7 @@
     :text "Codex"
     :closable false
     :content {:fx/type :tab-pane
-              :tabs [(apply merge unit-view-tab)]}}])
-
-(comment codex-view-tab)
+              :tabs unit-view-tab}}])
 
 (def battle-simulator-view-tab
   [{:fx/type :tab

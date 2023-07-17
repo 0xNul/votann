@@ -49,9 +49,7 @@
 (defn stats [model]
   [:stats
    [:div {:class "stat-container"}
-    (stat-table model)
-    (stat-model (:name model))]
-   ])
+    (stat-table model)]])
 
 (def ranged-head
   [:tr
@@ -80,8 +78,10 @@
    [:td {:class "icon"}]
    [:td {:class "text"}
     name
-    [:br]
-    [:b (str "[" (string/join ", " abilities) "]")]]
+    (if-not (empty? abilities)
+      (h/html
+       [:br]
+       [:b (str "[" (string/join ", " abilities) "]")]))]
    [:td range]
    [:td a]
    [:td (str bs "+")]
@@ -177,12 +177,26 @@
       (abilities-head "Invulnerable Save")]
      (shield ability))))
 
+(defn damaged-body [ability]
+  [:tr
+   [:td
+    [:p (:description ability)]]])
+
+(defn damaged [ability]
+  (if-not (empty? ability)
+    (h/html
+     [:table
+      (abilities-head (str "Damaged: " (:name ability)))
+      (damaged-body ability)])))
+
 (defn column-2 [model]
   [:div {:id "column-2"}
    [:div {:class "abilities"}
     (abilities (:abilities model))
     (wargear-abilities (:wargear-abilities (:abilities model)))
-    (invulnerable-save (:invulnerable-save (:abilities model)))]])
+    (invulnerable-save (:invulnerable-save (:abilities model)))
+    (damaged (:damaged (:abilities model)))
+    ]])
 
 (defn keywords-model [keywords]
   [:div {:class "model"}

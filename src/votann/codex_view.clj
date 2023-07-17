@@ -124,7 +124,9 @@
                      (:a weapon)
                      (:bs weapon)
                      (:s weapon)
-                     (:ap weapon)
+                     (if (= 0 (:ap weapon))
+                       0
+                       (str "-" (:ap weapon)))
                      (:d weapon)))])
 
    (if-not (empty? melee)
@@ -137,7 +139,9 @@
                      (:a weapon)
                      (:bs weapon)
                      (:s weapon)
-                     (:ap weapon)
+                     (if (= 0 (:ap weapon))
+                       0
+                       (str "-" (:ap weapon)))
                      (:d weapon)))])])
 
 (defn column-1 [ranged-weapons melee-weapons]
@@ -247,7 +251,20 @@
 
 (defn content [model]
   [:content
-   (column-1 (:ranged-weapons model) (:melee-weapons model))
+   (column-1 (-> (map (fn [model]
+                        (:ranged-weapons model)) (:bodyguards model))
+                 (concat (:ranged-weapons model))
+                 (flatten)
+                 (->>
+                  (distinct)
+                  (sort-by :name)))
+             (-> (map (fn [model]
+                        (:melee-weapons model)) (:bodyguards model))
+                 (concat (:melee-weapons model))
+                 (flatten)
+                 (->>
+                  (distinct)
+                  (sort-by :name))))
    (column-2 model)])
 
 (defn bottom [model]

@@ -9,8 +9,8 @@
   {:fx/type :stage
    :max-width 1340
    :min-width 1340
-   :max-height 1000
-   :min-height 1000
+   :max-height 1018
+   :min-height 1018
    :on-close-request (fn [_] (System/exit 0))
    :icons [(get-resource-path (str "icons/256x256.png"))
            (get-resource-path (str "icons/48x48.png"))

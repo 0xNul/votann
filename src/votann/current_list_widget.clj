@@ -43,7 +43,7 @@
 
 (defn current-list-widget [{:keys [units]}]
   {:fx/type :scroll-pane
-   :pref-height 860
+   :pref-height 904
    :pref-width 300
    :content {:fx/type :v-box
              :alignment :top-center

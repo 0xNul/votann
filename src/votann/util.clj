@@ -1,15 +1,7 @@
 (ns votann.util
-  (:require [votann.codex :refer [kin-models kin-enhancements]]
-            [cljfx.lifecycle :as fx.lifecycle]
+  (:require [cljfx.lifecycle :as fx.lifecycle]
             [cljfx.component :as fx.component]
             [clojure.string :as string]))
-
-(def get-models
-  (->> kin-models
-       (map (fn [model]
-              {:name (str (:name model) " " (:count (:points model)))
-               :points (:amount (:points model))}))
-       vec))
 
 (defn get-resource-path [file]
   (.toExternalForm (clojure.java.io/resource file)))

@@ -1,7 +1,16 @@
 (ns votann.units-and-points-widget
-  (:require [votann.util :refer [get-models]]
+  (:require [votann.codex :refer [kin-models kin-enhancements]]
             [cljfx.api :as fx]))
 
+(def get-unit-and-points
+  (-> (map (fn [model]
+             {:name (str (:name model) " " (:count (:points model)))
+              :points (:amount (:points model))}) kin-models)
+      (concat (map (fn [enchancement]
+                     {:name (str (:name enchancement) " " (:count (:points enchancement)))
+                      :points (:amount (:points enchancement))}
+                     ) kin-enhancements))
+      vec))
 
 (def units-points-label-widget
   {:fx/type :v-box
@@ -24,7 +33,7 @@
 
 
 (def unit-points-list-widget
-  (vec (for [unit get-models]
+  (vec (for [unit get-unit-and-points]
          {:fx/type :v-box
           :padding 5
           :children [{:fx/type :label

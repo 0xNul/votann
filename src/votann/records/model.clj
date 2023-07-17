@@ -1,4 +1,4 @@
-(ns votann.model)
+(ns votann.records.model)
 
 (defrecord Model [name m t sv w ld oc
                   points

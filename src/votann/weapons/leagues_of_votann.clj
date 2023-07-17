@@ -1,6 +1,6 @@
 (ns votann.weapons.leagues-of-votann
-  (:require [votann.weapon])
-  (:import [votann.weapon Weapon]))
+  (:require [votann.records.weapon])
+  (:import [votann.records.weapon Weapon]))
 
 (def ancestral-ward-stave (Weapon. "Ancestral ward stave" ["Psychic"] 1 1 3 7 1 "D3"))
 (def ancestral-wrath-focused-witchfire (Weapon. "Ancestral Wrath - focused witchfire" ["Hazardous" "Psychic"] 24 6 2 6 2 "D3"))

@@ -4,17 +4,15 @@ Votann is an informational program for creating your unit lists for Warhammer 40
 
 ## Installation
 
-Download votann-0.1.0.jar
+Download votann-0.2.0.jar
 
 ## Compile from source
 
 1. Install [clojure](https://clojure.org/guides/install_clojure), openJDK, [leinagain](https://leiningen.org).
 
-2. `run lein uberjar` (might need to `run lein deps` before if it doesnt do it automatically)
+2. `run lein uberjar`
 
-3. `java -jar  target/uberjar/votann-0.1.0-standalone.jar`
-
-(Please note I did not include the images for these, so if you build from source you will not have the unit and enhancements tabs viewable reach out to me and I can provide those files until I create non-copyright versions)
+3. `java -jar  target/uberjar/votann-0.2.0-standalone.jar`
 
 ## Usage
 
@@ -24,11 +22,11 @@ Navigate with clicking or tab or arrow keys and enter to select.
 
 Run the following command in your terminal or create a `.sh` script.
 
-`$ java -jar votann-0.1.0.jar`
+`$ java -jar votann-0.2.0.jar`
 
 ### Windows
 
-You can create a `.bat` file with the above command. Set the absolute path of the jar file or place the `.bat` file in the same directory as the `.jar` file. Or run the above command in your terminal.
+You can create a `.bat` file with the above command. Set the absolute path of the jar file or place the `.bat` file in the same directory as the `.jar` file. Or simply run the above command in your terminal.
 
 ## License
 

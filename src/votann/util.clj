@@ -14,9 +14,6 @@
 (defn get-resource-path [file]
   (.toExternalForm (clojure.java.io/resource file)))
 
-(defn unit-file-name [unit]
-  (string/lower-case (string/replace unit " " "-")))
-
 (defn remove-by-index [data index]
   (vec (concat (subvec data 0 index)
                (subvec data (inc index)))))

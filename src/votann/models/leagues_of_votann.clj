@@ -1,8 +1,8 @@
 (ns votann.models.leagues-of-votann
-  (:require [votann.model]
+  (:require [votann.records.model]
             [votann.records.points]
             [votann.weapons.leagues-of-votann :as weapon])
-  (:import [votann.model Model]
+  (:import [votann.records.model Model]
            [votann.records.points Points]))
 
 (def uthar-the-destined (Model. "Ûthar the Destined" 5 5 3 5 7 1

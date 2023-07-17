@@ -12,9 +12,9 @@
    :max-height 1000
    :min-height 1000
    :on-close-request (fn [_] (System/exit 0))
-   :icons [(get-resource-path (str "leagues-of-votann/icon256x256.png"))
-           (get-resource-path (str "leagues-of-votann/icon48x48.png"))
-           (get-resource-path (str "leagues-of-votann/icon32x32.png"))]
+   :icons [(get-resource-path (str "icons/256x256.png"))
+           (get-resource-path (str "icons/48x48.png"))
+           (get-resource-path (str "icons/32x32.png"))]
    :showing true
    :title "Votann"
    :scene {:fx/type :scene

@@ -37,9 +37,8 @@
   [{:fx/type :tab
     :text "Battle Simulator"
     :closable false
-    :content {:fx/type fx.ext.web-view/with-engine-props
-              :props {:content (codex-page nil)}
-              :desc {:fx/type :web-view}}}])
+    :content {:fx/type :label
+              :text "coming soon (TM)"}}])
 
 (defn tab-widget [data]
   (vec (apply concat [(list-view-tab data) codex-view-tab battle-simulator-view-tab])))

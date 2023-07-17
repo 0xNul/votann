@@ -1,5 +1,6 @@
 (ns votann.codex-view
-  (:require [clojure.string :as string]
+  (:require [votann.util :as util]
+            [clojure.string :as string]
             [hiccup2.core :as h]
             [hiccup.page :as page]))
 
@@ -232,7 +233,7 @@
 
 (def head
   [:head
-   [:link {:rel "stylesheet" :href (votann.util/get-resource-path "css/style.css")}]])
+   [:link {:rel "stylesheet" :href (util/get-resource-path "css/style.css")}]])
 
 (defn body [model]
   [:body

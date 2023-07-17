@@ -12,4 +12,3 @@ pom.xml.asc
 .hgignore
 .hg/
 *~
-/resources/leagues-of-votann/*

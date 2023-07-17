@@ -1,4 +1,4 @@
-(defproject votann "0.1.0"
+(defproject votann "0.2.0"
   :description "Votann is an informational program for creating your unit lists for Warhammer 40k"
   :url "https://github.com/0xNul/votann"
   :license {:name "GPL-3.0-or-later"

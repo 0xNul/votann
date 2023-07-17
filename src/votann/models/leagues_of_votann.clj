@@ -24,6 +24,7 @@
                                 {:composition ["1 Ûthar the Destined - Epic Hero"]
                                  :equipment ["volkanite disintegrator" "Blade of the Ancestors" "rampart crest"]}
                                 ["Einhyr Hearthguard" "Hearthkyn Warriors"]
+                                []
                                 {:model ["Infantry" "Character" "Epic Hero" "Ûthar the Destined"]
                                  :faction ["Leagues of Votann"]}
                                 "As the most accomplished hero of the Greater Thurian League, Kahl Ûthar the Destined is marked for greatness. Few can assess the foe as swiftly or mercilessly as Ûthar and - once he has his enemies' measure- he soon cuts them to pieces with the glowing Blade of the Ancestors."))
@@ -47,6 +48,7 @@
                   {:composition ["1 Khâl"]
                    :equipment ["Autoch-pattern combi-bolter" "forgewrought plasma axe" "rampart crest"]}
                   ["Einhyr Hearthguard" "Hearthkyn Warriors"]
+                  []
                   {:model ["Infantry" "Character" "Khâl"]
                    :faction ["Leagues of Votann"]}
                   "Most Oathbands are led by a Khâl, whose strategic wisdom, determination and martial might are an inspiration to their warriors. Khâls are often equipped with especially powerful weapons and potent field or teleportation technologies, the better to lead the fight from the front and bring down the deadliest foes."))
@@ -69,8 +71,21 @@
                              {:composition ["1 Einhyr Champion"]
                               :equipment ["Autoch-pattern combi-bolter" "mass hammer" "weavefield crest"]}
                              ["Einhyr Hearthguard"]
+                             []
                              {:model ["Infantry" "Character" "Exo-Armour" "Einhyr Champion"]
                               :faction ["Leagues of Votann"]}                                                        "Einhyr Champions wear modified exo-armour fitted with mass drivers. Combined with their formidable close-quarters weaponry and bulky RAM shields, this wargear transforms them into living battering rams whose accelerated charge hits hard enough to smash clean through armoured fortress gates."))
+
+(def corv (Model. "CORV" 5 5 4 1 6 1
+                  []
+                  [weapon/autoch-pattern-bolter]
+                  [weapon/close-combat-weapon]
+                  {}
+                  []
+                  {}
+                  []
+                  []
+                  {}
+                  ""))
 
 (def grimnyr (Model. "Grimnyr" 5 5 4 4 6 1
                      (Points. "x3" 75)
@@ -88,21 +103,35 @@
                       :composition-notice ["If this unit's Grimny model is ever destroyed, all of this unit's remaining CORV's models are also destroyed."]
                       :equipment ["Ancestral Wrath" "ancestral ward stave" "Autoch-pattern bolter" "close combat weapon"]}
                      ["Hearthkyn Warriors"]
+                     [corv]
                      {:all-models ["Infantry" "Grimnyr"]
                       :model ["Character" "Psyker"]
                       :faction ["Leagues of Votann"]}
                      "The Grimnyr - or Living Ancestors - are privy to the wisdom of the Votann, and as close as to priests as the secular Kin get. Equipped with barrier tech such as ward staves and energy-focused CORVs, they are able to rouse the fury of the immaterium against their foes."))
 
-(def corv (Model. "CORV" 5 5 4 1 6 1
-                  []
-                  [weapon/autoch-pattern-bolter]
-                  [weapon/close-combat-weapon]
-                  {}
-                  []
-                  {}
-                  []
-                  {}
-                  ""))
+(def ironkin-assistant (Model. "Ironkin Assistant" 5 5 4 2 7 1
+                               []
+                               [weapon/las-beam-cutter]
+                               [weapon/close-combat-weapon]
+                               {}
+                               []
+                               {}
+                               []
+                               []
+                               {}
+                               ""))
+
+(def e-cog (Model. "E-COG" 5 5 4 1 7 1
+                   []
+                   [weapon/autoch-pattern-bolt-pistol]
+                   [weapon/close-combat-weapon weapon/plasma-torch weapon/manipulator-arms]
+                   {}
+                   []
+                   {}
+                   []
+                   []
+                   {}
+                   ""))
 
 (def brokyr-iron-master (Model. "Brôkhyr Iron-Master" 5 5 4 4 7 1
                                 (Points. "x3" 95)
@@ -120,33 +149,11 @@
                                  :composition-notice ["If this unit's Iron-master is ever destroyed, all of this unit's Ironkyn Assistant and all remaining E-COGs are also destroyed."]
                                  :equipment ["graviton rifle" "graviton hammer" "las-beam cutter" "close combat weapon" "Autoch-pattern bolt pistol" "close combat weapon" "plasma torch" "manipulator arms"]}
                                 ["Hearthkyn Warriors" "Brôkhyr Thunderkyn"]
-
+                                [e-cog ironkin-assistant]
                                 {:all-models ["Infantry" "Brôkhyr Iron-master"]
                                  :model ["Character"]
                                  :faction ["Leagues of Votann"]}
                                 "Iron-masters are the most accomplished Brôkhyrs of their Kindred. In battle, they take on the duty of maintaining damaged Kin war engines, often aided by Ironkin and COG repair crews. These verteran Brôkhyrs also bring their most powerful personal creations to war, taking satisfaction in unleashing them upon the foe."))
-
-(def ironkin-assistant (Model. "Ironkin Assistant" 5 5 4 2 7 1
-                               []
-                               [weapon/las-beam-cutter]
-                               [weapon/close-combat-weapon]
-                               {}
-                               []
-                               {}
-                               []
-                               {}
-                               ""))
-
-(def e-cog (Model. "E-COG"5 5 4 1 7 1
-                   []
-                   [weapon/autoch-pattern-bolt-pistol]
-                   [weapon/close-combat-weapon weapon/plasma-torch weapon/manipulator-arms]
-                   {}
-                   []
-                   {}
-                   []
-                   {}
-                   ""))
 
 (def hearthkyn-warriors (Model. "Hearthkyn Warriors" 5 5 4 1 7 2
                                 (Points. "x10" 135)
@@ -179,6 +186,7 @@
                                 {:composition ["1 Theyn" "9 Hearthkyn Warriors"]
                                  :equipment ["Autoch-pattern bolt pistol" "Autoch-pattern bolter" "close combat weapon" "weavefield crest"]}
                                 []
+                                []
                                 {:model ["Infantry" "Battleline" "Grenades" "Hearthkyn Warriors"]
                                  :faction ["Leagues of Votann"]}
                                 "Well-armoured, well-trained and equipped with an array of powerful weaponry, Hearthkyn Warriors form the backbone of most Oathbands. Led by their Theyns, they lay down hails of firepower, shrugging off the enemy's return volleys before storming in to shatter their wavering foes for good."))
@@ -203,6 +211,7 @@
                                 {:composition ["1 Hesyr" "4-9 Hearthguard"]
                                  :equipment ["EtaCam plasma gun" "exo-armour grenade launcher" "concussion gauntlet" "weavefield crest"]}
                                 []
+                                []
                                 {:model ["Infantry" "Exo-Armour" "Einhyr Hearthguard"]
                                  :faction ["Leagues of Votann"]}
                                 "Clad in formidable exo-armour and equipped with a fearsome array of weaponry, Einhyr Hearthguard are a force to be reckoned with. Whether forming bodyguard around their Oathband's heroes or striking deep into the heart of enemy territory, they are unstoppable on the attack and immovable in defence."))
@@ -226,6 +235,7 @@
                               ["All models in this unit can each have their heavy plasma axe replaced with 1 concussion maul." "For every 5 models in this unit, 1 model that is not equipped with a mole grenade launcher can have its heavy plasma axe or concussion maul replaced with 1 twin concussion gauntlet" "For every 5 models in this unit, 1 model that is not equipped with a twin concussion gauntlet can be equipped with 1 mole grenade launcher. If a model is equipped with a mole grenade launcher, add 1 to its Wounds and Attacks characteristics"]
                               {:composition ["5-10 Cthonian Beserks"]
                                :equipment ["heavy plasma axe"]}
+                              []
                               []
                               {:model ["Infantry" "Cthonian Beserks"]
                                :faction ["Leagues of Votann"]}
@@ -255,6 +265,7 @@
                               {:composition ["3-6 Hernkyn Pioneers"]
                                :equipment ["bolt revolver" "bolt shotgun" "magna-coil autocannon" "plasma knife"]}
                               []
+                              []
                               {:model ["Mounted" "Grenades" "Fly" "Hernkyn Pioneers"]
                                :faction ["Leagues of Votann"]}
                               "Hernkyn Pioneers skim across alien worlds and scout enemey positions, riding on their magna-coil bikes. Fast, resilient, and possessed of formidable firepower, these far ranging bands of warriors often strike at the foe from unexpected quarters, or send back intelligence on enemy movements to their Oathban's Kahl."))
@@ -277,6 +288,7 @@
                       {:composition ["1 Sagitaur"]
                        :equipment ["HYLas beam cannon" "twin bolt cannon" "armoured wheels"]}
                       []
+                      []
                       {:model ["Vehicle" "Transport" "Dedicated Transport" "Sagitaur"]
                        :faction ["Leagues of Votann"]}
                       "Designed to survive the worst that hostile worlds and alien predators can throw at it, the Sagitaur is a rugged ATV ideally suited to scouting operations and switft, armoured offensives. Sagitaurs mount a remarkable amount of firepowr for their size, and can even knock out enemey battle tanks."))
@@ -294,6 +306,7 @@
                                ["All models in this unit can each have their bolt cannon replaced with 1 graviton blast cannon." "All models in this unit can each have their bolt cannon replaced with 1 SP conversion beamer."]
                                {:composition ["3-6 Brôkhyr Thunderkyn"]
                                 :equipment ["bolt cannon" "close combat weapon"]}
+                               []
                                []
                                {:model ["Infantry" "Exo-Frame" "Brôkhyr Thunderkyn"]
                                 :faction ["Leagues of Votann"]}
@@ -321,6 +334,7 @@
                                    ["This model can do one of the following" "This model's cyclic ion cannon can be replaced with one of the following" "This model's pan spectral scanner can be replaced with 1 Hekaton warhead."]
                                    {:composition ["1 Hekaton Land Fortress"]
                                      :equipment ["cyclic ion cannon" "MATR autocannon" "2 twin bolt cannons" "armoured wheels" "pan spectral scanner"]}
+                                   []
                                    []
                                    {:model ["Vehicle" "Transport" "Hekaton Land Fortress"]
                                     :faction ["Leagues of Votann"]}

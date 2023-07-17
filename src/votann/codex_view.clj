@@ -36,10 +36,10 @@
     stat-head
     (stat-body (:m model) (:t model) (:sv model) (:w model) (:ld model) (:oc model))])
 
-(def stat-table-bottom
+(defn stat-table-bottom [model]
    [:table
     stat-head-empty
-    stat-body])
+    (stat-body (:m model) (:t model) (:sv model) (:w model) (:ld model) (:oc model))])
 
 (defn stat-model [name]
   [:div {:class "stat-name"} [:h3 name]])
@@ -49,8 +49,30 @@
 
 (defn stats [model]
   [:stats
+   (if (empty? (:bodyguards model))
+     [:div {:class "stat-container"}
+      (stat-table model)]
+     (h/html
+      [:div {:class "stat-container"}
+       (stat-table model)
+       (stat-model (:name model))]
+      (map-indexed (fn [index model]
+                     (if (= index 0)
+                       [:div {:class "stat-container"}
+                        (stat-table model)
+                        (stat-model (:name model))]
+                       [:div {:class "stat-container"}
+                        (stat-table-bottom model)
+                        (stat-model-bottom (:name model))])) (:bodyguards model))))])
+
+(defn stats-two [model]
+  [:stats-two
    [:div {:class "stat-container"}
-    (stat-table model)]])
+    (stat-table model)
+    (stat-model (:name model))]
+   [:div {:class "stat-container"}
+    (stat-table-bottom (first (:bodyguards model)))
+    (stat-model-bottom (:name (first (:bodyguards model))))]])
 
 (def ranged-head
   [:tr
@@ -219,7 +241,9 @@
 (defn top [model]
   [:top
    [:h1 (:name model)]
-   (stats model)])
+   (if (not= (count (:bodyguards model)) 1)
+     (stats model)
+     (stats-two model))])
 
 (defn content [model]
   [:content

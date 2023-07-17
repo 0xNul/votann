@@ -8,5 +8,6 @@
                   wargear-options
                   unit-composition
                   leader
+                  bodyguards
                   keywords
                   quote])

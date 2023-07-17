@@ -27,6 +27,13 @@ stats {
     margin-bottom: 12px;
 }
 
+stats-two {
+    display: block;
+    height: 175px;
+    column-fill: auto;
+    column-width: 585px;
+}
+
 content {
     display: flex;
     align-items: stretch;
@@ -134,11 +141,11 @@ td.text {
     float: left;
 }
 
-stats table {
+stats table, stats-two table {
     border-spacing: 15px 0px;
 }
 
-stats td {
+stats td, stats-two td {
     width: 47px;
     height: 47px;
     font-size: 24px;

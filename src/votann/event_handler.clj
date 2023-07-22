@@ -1,7 +1,7 @@
 (ns votann.event-handler
   (:require [votann.codex :refer [kin-models]]
             [votann.util :as util]
-            [votann-battle-simulator.battle-round :refer [shooting-phase fight-phase]])
+            [votann-battle-simulator.battle-round :refer [combat-phase]])
   (:import [javafx.scene.input KeyCode KeyEvent]))
 
 (def *state (atom {:list
@@ -172,21 +172,23 @@
     (cond (= "Ranged" (get-in @*state [:battle-simulator :weapon-type]))
           (do
             (swap! *state assoc-in [:battle-simulator :data]
-                   (shooting-phase (Integer/parseInt (get-in @*state [:battle-simulator :rolls]))
-                                   (util/get-model (get-in @*state [:battle-simulator :model]))
-                                   (Integer/parseInt (get-in @*state [:battle-simulator :target-count]))
-                                   (util/get-model (get-in @*state [:battle-simulator :target]))
-                                   (battle-modifiers *state)))
+                   (combat-phase "shooting"
+                                 (Integer/parseInt (get-in @*state [:battle-simulator :rolls]))
+                                 (util/get-model (get-in @*state [:battle-simulator :model]))
+                                 (Integer/parseInt (get-in @*state [:battle-simulator :target-count]))
+                                 (util/get-model (get-in @*state [:battle-simulator :target]))
+                                 (battle-modifiers *state)))
             (swap! *state assoc-in [:battle-simulator :count] (str (+ (Integer/parseInt (get-in @*state [:battle-simulator :count])) 1)))
             (total-damage *state))
 
           (= "Melee" (get-in @*state [:battle-simulator :weapon-type]))
           (do
             (swap! *state assoc-in [:battle-simulator :data]
-                   (fight-phase (Integer/parseInt (get-in @*state [:battle-simulator :rolls]))
-                                (util/get-model (get-in @*state [:battle-simulator :model]))
-                                (Integer/parseInt (get-in @*state [:battle-simulator :target-count]))
-                                (util/get-model (get-in @*state [:battle-simulator :target]))
-                                (battle-modifiers *state)))
+                   (combat-phase "fight"
+                                 (Integer/parseInt (get-in @*state [:battle-simulator :rolls]))
+                                 (util/get-model (get-in @*state [:battle-simulator :model]))
+                                 (Integer/parseInt (get-in @*state [:battle-simulator :target-count]))
+                                 (util/get-model (get-in @*state [:battle-simulator :target]))
+                                 (battle-modifiers *state)))
             (swap! *state assoc-in [:battle-simulator :count] (str (+ (Integer/parseInt (get-in @*state [:battle-simulator :count])) 1)))
             (total-damage *state)))))

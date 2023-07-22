@@ -225,18 +225,24 @@
     (damaged (:damaged (:abilities model)))
     ]])
 
-(defn keywords-model [keywords]
+(defn keywords-model [name keywords]
   [:div {:class "model"}
-   [:span (str "KEYWORDS: " (string/join ", " keywords))]])
+   (if (empty? (:all-models keywords))
+     [:span "KEYWORDS: "
+      [:b (string/join ", " (:model keywords))]]
+     [:span "KEYWORDS - ALL MODELS: "
+      [:b (string/join ", " (:all-models keywords))]
+      (str " | " (string/upper-case name) " MODEL: ")
+      [:b (string/join ", " (:model keywords))]])])
 
 (defn keywords-faction [keywords]
   [:div {:class "faction"}
    [:div "FACTION KEYWORDS:"]
    [:span (string/join ", " keywords)]])
 
-(defn keywords [keywords]
+(defn keywords [model]
   [:div {:class "keywords"}
-   (keywords-model (:model keywords))
+   (keywords-model (:name model) (:keywords model))
    (keywords-faction (:faction keywords))])
 
 (def star
@@ -269,7 +275,7 @@
 
 (defn bottom [model]
   [:bottom
-   (keywords (:keywords model))
+   (keywords model)
    star])
 
 (def head

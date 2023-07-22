@@ -172,7 +172,7 @@
     (cond (= "Ranged" (get-in @*state [:battle-simulator :weapon-type]))
           (do
             (swap! *state assoc-in [:battle-simulator :data]
-                   (combat-phase "shooting"
+                   (combat-phase :ranged-weapons
                                  (Integer/parseInt (get-in @*state [:battle-simulator :rolls]))
                                  (util/get-model (get-in @*state [:battle-simulator :model]))
                                  (Integer/parseInt (get-in @*state [:battle-simulator :target-count]))
@@ -184,7 +184,7 @@
           (= "Melee" (get-in @*state [:battle-simulator :weapon-type]))
           (do
             (swap! *state assoc-in [:battle-simulator :data]
-                   (combat-phase "fight"
+                   (combat-phase :melee-weapons
                                  (Integer/parseInt (get-in @*state [:battle-simulator :rolls]))
                                  (util/get-model (get-in @*state [:battle-simulator :model]))
                                  (Integer/parseInt (get-in @*state [:battle-simulator :target-count]))

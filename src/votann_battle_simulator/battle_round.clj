@@ -46,13 +46,17 @@
 
 (defn movement-phase [])
 
-(defn combat-phase [^String phase ^Integer unit-size ^Model model ^Integer target-size ^Model target battle-modifiers]
-  (println (str "\n----------\nStarting " phase "-phase"))
+(defn combat-phase [phase ^Integer unit-size ^Model model ^Integer target-size ^Model target battle-modifiers]
+  (cond
+    (= phase :ranged-weapons)
+    (println (str "\n----------\nStarting shooting-phase"))
+    (= phase :melee-weapons)
+    (println (str "\n----------\nStarting fight-phase")))
   (println (str (:name model) " x" unit-size " target " (:name target)
                 " W: " (:w target)
                 " T: " (:t target)
                 " SV: " (:sv target)))
-  (for [weapon (:ranged-weapons model)]
+  (for [weapon (phase model)]
     (do
       (println (str "\nUsing weapon: " (:name weapon)))
       (let [damage (resolve-damage unit-size weapon target-size target battle-modifiers)]

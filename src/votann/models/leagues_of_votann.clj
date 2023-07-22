@@ -36,7 +36,7 @@
                   {:core ["Leader"]
                    :faction ["Eye of the Ancestors"]
                    :other [{:name "Kindered Hero"
-                            :description "While this model is leading a unit, weapons equipped by a models in that unit have the [LETHAL HITS] ability."}
+                            :description "While this model is leading a unit, weapons equipped by models in that unit have the [LETHAL HITS] ability."}
                            {:name "Grim Efficiency"
                             :description "Once per battle round, in your Command phase, you can select one model from your army with this ability, then select one enemy unit that is visibile to that model. That enemy unit gains 1 Judgement token."}]
                    :wargear-abilities [{:name "Rampart Crest"

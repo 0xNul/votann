@@ -41,10 +41,15 @@
                            :on-key-pressed {:event/type :event/export-list-enter}
                            :text "Export"}]}]})
 
-(defn current-list-widget [{:keys [units]}]
+(defn current-list-scroll-widget [{:keys [units]}]
   {:fx/type :scroll-pane
    :pref-height 904
    :pref-width 300
    :content {:fx/type :v-box
              :alignment :top-center
              :children (current-list units)}})
+
+(defn current-list-widget [data]
+  {:fx/type :v-box
+   :alignment :top-center
+   :children [(current-list-label-widget data) (current-list-scroll-widget data)]})

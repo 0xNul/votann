@@ -32,6 +32,7 @@
 
 (defn battle-simulator-widget [{:keys [data total-damage data-type count weapon-type rolls target-count tokens disabled]}]
   {:fx/type :v-box
+   :style "-fx-background-color: #e1e0e1;"
    :children [{:fx/type :h-box
                :alignment :center
                :padding 12

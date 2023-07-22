@@ -1,36 +1,51 @@
 (ns votann.event-handler
+  (:require [votann.codex :refer [kin-models]])
   (:import [javafx.scene.input KeyCode KeyEvent]))
 
-(def *list-units (atom {:points 0 :units []}))
+(def *state (atom {:list
+                   {:points 0
+                    :units []}
+                   :battle-simulator
+                   {:data []
+                    :total-damage {}
+                    :data-type "Total"
+                    :count "0"
+                    :weapon-type "Ranged"
+                    :model (:name (first kin-models))
+                    :target (:name (first kin-models))
+                    :rolls "1"
+                    :target-count "1"
+                    :tokens "0                  "
+                    :disabled false}}))
 
 (defn enter-event [function e]
   (if (= KeyCode/ENTER (.getCode ^KeyEvent (:fx/event e)))
     (function e)))
 
 (defn undo-points [_]
-  (if-not (empty? (get-in @*list-units [:units]))
-    (let [points (:points (last (:units @*list-units)))]
-      (swap! *list-units assoc :points (max 0 (- (:points @*list-units) points)))
-      (swap! *list-units update-in [:units] pop))))
+  (if-not (empty? (get-in @*state [:list :units]))
+    (let [points (:points (last (get-in @*state [:list :units])))]
+      (swap! *state assoc-in [:list :points] (max 0 (- (get-in @*state [:list :points]) points)))
+      (swap! *state update-in [:list :units] pop))))
 
 (defn restart-list [_]
-  (if-not (empty? (get-in @*list-units [:units]))
+  (if-not (empty? (get-in @*state [:list :units]))
     (do
-      (swap! *list-units assoc :points 0)
-      (swap! *list-units assoc-in [:units] []))))
+      (swap! *state assoc-in [:list :points] 0)
+      (swap! *state assoc-in [:list :units] []))))
 
 (defn add-unit [e]
-  (swap! *list-units assoc :points (+ (:points @*list-units) (:points (:event/target e))))
-  (swap! *list-units update-in [:units] conj (:event/target e)))
+  (swap! *state assoc-in [:list :points] (+ (get-in @*state [:list :points]) (:points (:event/target e))))
+  (swap! *state update-in [:list :units] conj (:event/target e)))
 
 (defn remove-unit [e]
   (do
-    (swap! *list-units assoc :points (max 0 (- (:points @*list-units) (:points (:event/target e)))))
-    (swap! *list-units update :units #(vec (concat (subvec % 0 (:index (:event/target e))) (subvec % (inc (:index (:event/target e)))))))))
+    (swap! *state assoc-in [:list :points] (max 0 (- (get-in @*state [:list :points]) (:points (:event/target e)))))
+    (swap! *state update-in [:list :units] #(vec (concat (subvec % 0 (:index (:event/target e))) (subvec % (inc (:index (:event/target e)))))))))
 
 (defn export-list [_]
-  (if-not (empty? (get-in @*list-units [:units]))
-    (spit (str (.toString (java.time.Instant/now)) ".list") @*list-units)))
+  (if-not (empty? (get-in @*state [:list :units]))
+    (spit (str (.toString (java.time.Instant/now)) ".list") (:list @*state))))
 
 (defn map-event-handler [e]
   (cond (= :event/undo-unit-click (:event/type e))
@@ -61,5 +76,4 @@
         (export-list e)
 
         (= :event/export-list-enter (:event/type e))
-        (enter-event export-list e)
-        ))
+        (enter-event export-list e)))

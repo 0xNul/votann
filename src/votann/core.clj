@@ -1,7 +1,7 @@
 (ns votann.core
   (:gen-class)
   (:require [votann.util :refer [get-resource-path]]
-            [votann.event-handler :refer [map-event-handler *list-units]]
+            [votann.event-handler :refer [map-event-handler *state]]
             [votann.tab_widget :refer [tab-widget]]
             [cljfx.api :as fx]))
 
@@ -29,4 +29,4 @@
 
 (defn -main
   [& args]
-  (fx/mount-renderer *list-units renderer))
+  (fx/mount-renderer *state renderer))

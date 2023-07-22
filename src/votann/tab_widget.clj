@@ -4,6 +4,7 @@
             [votann.unit-widget :refer [unit-view-widget]]
             [votann.enhancements-widget :refer [enhancements-view-widget]]
             [votann.codex-view :refer [codex-page]]
+            [votann.battle-simulator-widget :refer [place-holder]]
             [cljfx.api :as fx]
             [cljfx.ext.web-view :as fx.ext.web-view]))
 
@@ -37,8 +38,7 @@
   [{:fx/type :tab
     :text "Battle Simulator"
     :closable false
-    :content {:fx/type :label
-              :text "coming soon (TM)"}}])
+    :content place-holder}])
 
 (defn tab-widget [data]
-  (vec (apply concat [(list-view-tab data) codex-view-tab battle-simulator-view-tab])))
+  (vec (apply concat [(list-view-tab (:list data)) codex-view-tab battle-simulator-view-tab])))

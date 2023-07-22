@@ -1,6 +1,8 @@
 (ns votann-battle-simulator.battle-round
   (:require [votann-battle-simulator.util :as util]
-            [votann-battle-simulator.weapon-abilities :as weapon-abilities])
+            [votann-battle-simulator.weapon-abilities :as weapon-abilities]
+            [votann.records.model]
+            [votann.records.weapon])
   (:import [votann.records.model Model]
            [votann.records.weapon Weapon]))
 

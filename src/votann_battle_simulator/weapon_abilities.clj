@@ -1,5 +1,6 @@
 (ns votann-battle-simulator.weapon-abilities
-  (:require [votann-battle-simulator.util :as util])
+  (:require [votann-battle-simulator.util :as util]
+            [votann.records.weapon])
   (:import [votann.records.weapon Weapon]))
 
 (defn blast

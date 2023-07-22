@@ -17,6 +17,11 @@
    lov/brokyr-thunderkyn
    lov/hekaton-land-fortress])
 
+(def kin-bodyguards
+  [lov/corv
+   lov/ironkin-assistant
+   lov/e-cog])
+
 (def kin-enhancements
   [{:name "A Long List"
     :points (Points. "x1" 15)}

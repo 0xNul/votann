@@ -238,12 +238,12 @@
 (defn keywords-faction [keywords]
   [:div {:class "faction"}
    [:div "FACTION KEYWORDS:"]
-   [:span (string/join ", " keywords)]])
+   [:span (string/join ", " (:faction keywords))]])
 
 (defn keywords [model]
   [:div {:class "keywords"}
    (keywords-model (:name model) (:keywords model))
-   (keywords-faction (:faction keywords))])
+   (keywords-faction (:keywords model))])
 
 (def star
   [:div {:class "star"} ""])

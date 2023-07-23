@@ -30,7 +30,7 @@
                (= "Total" type)
                {:fx/type :xy-chart-data :x-value (util/total damage) :y-value weapon}))))
 
-(defn battle-simulator-widget [{:keys [data total-damage data-type count weapon-type rolls target-count tokens disabled]}]
+(defn battle-simulator-widget [{:keys [data total-damage data-type count weapon-type rolls target-count target-distance tokens disabled]}]
   {:fx/type :v-box
    :style "-fx-background-color: #e1e0e1;"
    :children [{:fx/type :h-box
@@ -74,8 +74,15 @@
                                       {:fx/type :text-field
                                        :on-key-typed {:event/type :event/choice-select-target-size}
                                        :max-width 82
-                                       :text target-count}
-                                      ]}
+                                       :text target-count}]}
+                          {:fx/type :v-box
+                           :children [
+                                      {:fx/type :label
+                                       :text "Distance \""}
+                                      {:fx/type :text-field
+                                       :on-key-typed {:event/type :event/choice-select-target-distance}
+                                       :max-width 82
+                                       :text target-distance}]}
                           {:fx/type :v-box
                            :children [
                                       {:fx/type :label

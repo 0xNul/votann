@@ -17,6 +17,7 @@
                     :target (:name (first kin-models))
                     :rolls "1"
                     :target-count "1"
+                    :target-distance "2"
                     :tokens "0                  "
                     :disabled false}}))
 
@@ -107,7 +108,11 @@
 
     ;;battle-simulator events
     (= :event/choice-select-weapon (:event/type e))
-    (swap! *state assoc-in [:battle-simulator :weapon-type] (.getValue (.getTarget (:fx/event e))))
+    (do
+      (swap! *state assoc-in [:battle-simulator :weapon-type] (.getValue (.getTarget (:fx/event e))))
+      (if (= "Ranged" (get-in @*state [:battle-simulator :weapon-type]))
+        (swap! *state assoc-in [:battle-simulator :target-distance] "2")
+        (swap! *state assoc-in [:battle-simulator :target-distance] "1")))
 
     (= :event/choice-select-model (:event/type e))
     (do
@@ -161,6 +166,18 @@
              (swap! *state assoc-in [:battle-simulator :target-count] "")
              (.setText (.getTarget (:fx/event e)) "")
              (swap! *state assoc-in [:battle-simulator :disabled] true)))
+
+    (= :event/choice-select-target-distance (:event/type e))
+    (try
+      (let [count (Integer/parseInt (.getText (.getTarget (:fx/event e))))]
+        (if (< count 1)
+          (do
+            (swap! *state assoc-in [:battle-simulator :target-distance] "")
+            (.setText (.getTarget (:fx/event e)) ""))
+            (swap! *state assoc-in [:battle-simulator :target-distance] (str count))))
+      (catch java.lang.NumberFormatException | java.lang.NullPointerException e
+             (swap! *state assoc-in [:battle-simulator :target-distance] "")
+             (.setText (.getTarget (:fx/event e)) "")))
 
     (= :event/choice-select-tokens (:event/type e))
     (swap! *state assoc-in [:battle-simulator :tokens] (.getValue (.getTarget (:fx/event e))))

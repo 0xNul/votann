@@ -11,6 +11,21 @@
      (println "Dice count before " dice " after " blast-added)
      blast-added)))
 
+(defn resolve-anti [stat]
+  (let [keyword (re-find #"Anti-(\w+)" stat)
+        modifier (Integer/parseInt (re-find #"\d+" stat))]
+    {:keyword (second keyword)
+     :modifier modifier}))
+
+(defn anti [dice type target-keywords]
+  (let [resolved-type (resolve-anti type)]
+    (if (contains? (set target-keywords) (:keyword resolved-type))
+      (map (fn [roll]
+             (if (>= roll (:modifier resolved-type))
+               6
+               roll)) dice)
+      dice)))
+
 (defn devastating-wounds [dice]
   (let [mortal-added (vec (map #(if (= 6 %)
                                   99
@@ -137,7 +152,7 @@
           (recur (rest abilities)
                  modifier))))))
 
-(defn resolve-wound-dice-abilites [^Weapon weapon dice strength toughness]
+(defn resolve-wound-dice-abilites [^Weapon weapon dice strength toughness keywords]
   (loop [abilities (:abilities weapon)
          dice-rolls dice
          modifier 0]
@@ -145,6 +160,13 @@
       dice-rolls
       (let [ability (first abilities)]
         (cond
+          (not (nil? (re-find #"Anti-" ability)))
+          (do
+            (println "Applied Anti wound ability for " (:name weapon))
+            (recur (rest abilities)
+                   (anti dice ability keywords)
+                   modifier))
+
           (not (nil? (re-find #"Devastating Wounds" ability)))
           (do
             (println "Applied Devastating Wounds wound ability for " (:name weapon))

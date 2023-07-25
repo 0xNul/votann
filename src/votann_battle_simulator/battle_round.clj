@@ -26,18 +26,20 @@
              (filter #(>= % 6) rolls))))
 
 (defn resolve-saving-throw-roll [rolls ap save]
-  (vec (filter #(< % (+ ap save)) rolls)))
+  (let [saves (vec (filter #(< % (+ ap save)) rolls))]
+    (println (str "ap: -" ap " sv: " save " Saves before " rolls " after " saves))
+    saves))
 
 (defn resolve-damage [^Integer unit-size ^Weapon weapon ^Integer target-size ^Model target battle-modifiers]
   (let [rolls (util/roll-d6 (weapon-abilities/resolve-attack-abilities weapon unit-size target-size))
         rolls (weapon-abilities/resolve-hit-dice-abilities weapon rolls)
         rolls (weapon-abilities/resolve-hit-modifier-abilities weapon (:hit battle-modifiers) rolls)
         hits (resolve-hit-roll rolls (:bs weapon))
-        wounds (weapon-abilities/resolve-wound-dice-abilites weapon (util/roll-d6 (count hits)) (:s weapon) (:t target))
+        wounds (weapon-abilities/resolve-wound-dice-abilites weapon (util/roll-d6 (count hits)) (:s weapon) (:t target) (:model (:keywords target)))
         mortal-wounds (count (filter #(= 99 %) wounds))
         wounds (vec (filter #(not= 99 %) wounds))
         wounds (weapon-abilities/resolve-wound-modifier-abilites weapon (:wound battle-modifiers) wounds)
-        wounds (resolve-wound-roll (util/roll-d6 (count wounds)) (:s weapon) (:t target))
+        wounds (resolve-wound-roll wounds (:s weapon) (:t target))
         non-saves (count (resolve-saving-throw-roll (util/roll-d6 (count wounds)) (:ap weapon) (:sv target)))
         damage (* (util/resolve-stat-count (:d weapon)) (+ mortal-wounds non-saves))]
     damage))

@@ -73,69 +73,94 @@
   (if-not (empty? (get-in @*state [:list :units]))
     (spit (str (.toString (java.time.Instant/now)) ".list") (:list @*state))))
 
-(defn map-event-handler [e]
-  (cond
-    ;; list events
-    (= :event/undo-unit-click (:event/type e))
-    (undo-points e)
+(defprotocol EventHandler
+  (handle-event [this]))
 
-    (= :event/undo-unit-enter (:event/type e))
-    (enter-event undo-points e)
+(defrecord UndoUnitClick [e]
+  EventHandler
+  (handle-event [this]
+    (undo-points e)))
 
-    (= :event/restart-click (:event/type e))
-    (restart-list e)
+(defrecord UndoUnitEnter [e]
+  EventHandler
+  (handle-event [this]
+    (enter-event undo-points e)))
 
-    (= :event/restart-enter (:event/type e))
-    (enter-event restart-list e)
+(defrecord RestartClick [e]
+  EventHandler
+  (handle-event [this]
+    (restart-list e)))
 
-    (= :event/remove-unit-click (:event/type e))
-    (remove-unit e)
+(defrecord RestartEnter [e]
+  EventHandler
+  (handle-event [this]
+    (restart-list e)))
 
-    (= :event/remove-unit-enter (:event/type e))
-    (enter-event remove-unit e)
+(defrecord RestartUnitClick [e]
+  EventHandler
+  (handle-event [this]
+    (remove-unit e)))
 
-    (= :event/add-unit-click (:event/type e))
-    (add-unit e)
+(defrecord RemoveUnitEnter [e]
+  EventHandler
+  (handle-event [this]
+    (enter-event remove-unit e)))
 
-    (= :event/add-unit-enter (:event/type e))
-    (enter-event add-unit e)
+(defrecord AddUnitClick [e]
+  EventHandler
+  (handle-event [this]
+    (add-unit e)))
 
-    (= :event/export-list-click (:event/type e))
-    (export-list e)
+(defrecord AddUnitEnter [e]
+  EventHandler
+  (handle-event [this]
+    (enter-event add-unit e)))
 
-    (= :event/export-list-enter (:event/type e))
-    (enter-event export-list e)
+(defrecord ExportListClick [e]
+  EventHandler
+  (handle-event [this]
+    (export-list e)))
 
-    ;;battle-simulator events
-    (= :event/choice-select-weapon (:event/type e))
-    (do
-      (swap! *state assoc-in [:battle-simulator :weapon-type] (.getValue (.getTarget (:fx/event e))))
-      (if (= "Ranged" (get-in @*state [:battle-simulator :weapon-type]))
-        (swap! *state assoc-in [:battle-simulator :target-distance] "2")
-        (swap! *state assoc-in [:battle-simulator :target-distance] "1")))
+(defrecord ExportListEnter [e]
+  EventHandler
+  (handle-event [this]
+    (enter-event export-list e)))
 
-    (= :event/choice-select-model (:event/type e))
-    (do
-      (swap! *state assoc-in [:battle-simulator :model] (.getValue (.getTarget (:fx/event e))))
-      (swap! *state assoc-in [:battle-simulator :count] "0")
-      (swap! *state assoc-in [:battle-simulator :rolls] "1")
-      (swap! *state assoc-in [:battle-simulator :data] [])
-      (swap! *state assoc-in [:battle-simulator :total-damage] {}))
+(defrecord ChoiceSelectWeapon [e]
+  EventHandler
+  (handle-event [this]
+    (swap! *state assoc-in [:battle-simulator :weapon-type] (.getValue (.getTarget (:fx/event e))))
+    (if (= "Ranged" (get-in @*state [:battle-simulator :weapon-type]))
+      (swap! *state assoc-in [:battle-simulator :target-distance] "2")
+      (swap! *state assoc-in [:battle-simulator :target-distance] "1"))))
 
-    (= :event/choice-select-reset (:event/type e))
-    (do
-      (swap! *state assoc-in [:battle-simulator :count] "0")
-      (swap! *state assoc-in [:battle-simulator :data] [])
-      (swap! *state assoc-in [:battle-simulator :total-damage] {}))
+(defrecord ChoiceSelectModel [e]
+  EventHandler
+  (handle-event [this]
+    (swap! *state assoc-in [:battle-simulator :model] (.getValue (.getTarget (:fx/event e))))
+    (swap! *state assoc-in [:battle-simulator :count] "0")
+    (swap! *state assoc-in [:battle-simulator :rolls] "1")
+    (swap! *state assoc-in [:battle-simulator :data] [])
+    (swap! *state assoc-in [:battle-simulator :total-damage] {})))
 
-    (= :event/choice-select-target (:event/type e))
-    (do
-      (swap! *state assoc-in [:battle-simulator :target] (.getValue (.getTarget (:fx/event e))))
-      (swap! *state assoc-in [:battle-simulator :count] "0")
-      (swap! *state assoc-in [:battle-simulator :data] [])
-      (swap! *state assoc-in [:battle-simulator :total-damage] {}))
+(defrecord ChoiceSelectReset [e]
+  EventHandler
+  (handle-event [this]
+    (swap! *state assoc-in [:battle-simulator :count] "0")
+    (swap! *state assoc-in [:battle-simulator :data] [])
+    (swap! *state assoc-in [:battle-simulator :total-damage] {})))
 
-    (= :event/choice-select-rolls (:event/type e))
+(defrecord ChoiceSelectTarget [e]
+  EventHandler
+  (handle-event [this]
+    (swap! *state assoc-in [:battle-simulator :target] (.getValue (.getTarget (:fx/event e))))
+    (swap! *state assoc-in [:battle-simulator :count] "0")
+    (swap! *state assoc-in [:battle-simulator :data] [])
+    (swap! *state assoc-in [:battle-simulator :total-damage] {})))
+
+(defrecord ChoiceSelectRolls [e]
+  EventHandler
+  (handle-event [this]
     (try
       (let [roll (Integer/parseInt (.getText (.getTarget (:fx/event e))))]
         (if (< roll 1)
@@ -149,9 +174,11 @@
       (catch java.lang.NumberFormatException | java.lang.NullPointerException e
              (swap! *state assoc-in [:battle-simulator :rolls] "")
              (.setText (.getTarget (:fx/event e)) "")
-             (swap! *state assoc-in [:battle-simulator :disabled] true)))
+             (swap! *state assoc-in [:battle-simulator :disabled] true)))))
 
-    (= :event/choice-select-target-size (:event/type e))
+(defrecord ChoiceSelectSize [e]
+  EventHandler
+  (handle-event [this]
     (try
       (let [count (Integer/parseInt (.getText (.getTarget (:fx/event e))))]
         (if (< count 1)
@@ -165,27 +192,35 @@
       (catch java.lang.NumberFormatException | java.lang.NullPointerException e
              (swap! *state assoc-in [:battle-simulator :target-count] "")
              (.setText (.getTarget (:fx/event e)) "")
-             (swap! *state assoc-in [:battle-simulator :disabled] true)))
+             (swap! *state assoc-in [:battle-simulator :disabled] true)))))
 
-    (= :event/choice-select-target-distance (:event/type e))
+(defrecord ChoiceSelectTargetDistance [e]
+  EventHandler
+  (handle-event [this]
     (try
       (let [count (Integer/parseInt (.getText (.getTarget (:fx/event e))))]
         (if (< count 1)
           (do
             (swap! *state assoc-in [:battle-simulator :target-distance] "")
             (.setText (.getTarget (:fx/event e)) ""))
-            (swap! *state assoc-in [:battle-simulator :target-distance] (str count))))
+          (swap! *state assoc-in [:battle-simulator :target-distance] (str count))))
       (catch java.lang.NumberFormatException | java.lang.NullPointerException e
              (swap! *state assoc-in [:battle-simulator :target-distance] "")
-             (.setText (.getTarget (:fx/event e)) "")))
+             (.setText (.getTarget (:fx/event e)) "")))))
 
-    (= :event/choice-select-tokens (:event/type e))
-    (swap! *state assoc-in [:battle-simulator :tokens] (.getValue (.getTarget (:fx/event e))))
+(defrecord ChoiceSelectTokens [e]
+  EventHandler
+  (handle-event [this]
+    (swap! *state assoc-in [:battle-simulator :tokens] (.getValue (.getTarget (:fx/event e))))))
 
-    (= :event/choice-select-stats (:event/type e))
-    (swap! *state assoc-in [:battle-simulator :data-type] (.getValue (.getTarget (:fx/event e))))
+(defrecord ChoiceSelectStats [e]
+  EventHandler
+  (handle-event [this]
+    (swap! *state assoc-in [:battle-simulator :data-type] (.getValue (.getTarget (:fx/event e))))))
 
-    (= :event/choice-select-start (:event/type e))
+(defrecord ChoiceSelectStart [e]
+  EventHandler
+  (handle-event [this]
     (cond (= "Ranged" (get-in @*state [:battle-simulator :weapon-type]))
           (do
             (swap! *state assoc-in [:battle-simulator :data]
@@ -209,3 +244,30 @@
                                  (battle-modifiers *state)))
             (swap! *state assoc-in [:battle-simulator :count] (str (+ (Integer/parseInt (get-in @*state [:battle-simulator :count])) 1)))
             (total-damage *state)))))
+
+(def event-handlers
+  {:event/undo-unit-click (fn [e] (handle-event (UndoUnitClick. e)))
+   :event/undo-unit-enter (fn [e] (handle-event (UndoUnitEnter. e)))
+   :event/restart-click (fn [e] (handle-event (RestartClick. e)))
+   :event/restart-enter (fn [e] (handle-event (RestartEnter. e)))
+   :event/remove-unit-click (fn [e] (handle-event (RestartUnitClick. e)))
+   :event/remove-unit-enter (fn [e] (handle-event (RemoveUnitEnter. e)))
+   :event/add-unit-click (fn [e] (handle-event (AddUnitClick. e)))
+   :event/add-unit-enter (fn [e] (handle-event (AddUnitEnter. e)))
+   :event/export-list-click (fn [e] (handle-event (ExportListClick. e)))
+   :event/export-list-enter (fn [e] (handle-event (ExportListEnter. e)))
+   :event/choice-select-weapon (fn [e] (handle-event (ChoiceSelectWeapon. e)))
+   :event/choice-select-model (fn [e] (handle-event (ChoiceSelectModel. e)))
+   :event/choice-select-reset (fn [e] (handle-event (ChoiceSelectReset. e)))
+   :event/choice-select-target (fn [e] (handle-event (ChoiceSelectTarget. e)))
+   :event/choice-select-rolls (fn [e] (handle-event (ChoiceSelectRolls. e)))
+   :event/choice-select-target-size (fn [e] (handle-event (ChoiceSelectSize. e)))
+   :event/choice-select-target-distance (fn [e] (handle-event (ChoiceSelectTargetDistance. e)))
+   :event/choice-select-tokens (fn [e] (handle-event (ChoiceSelectTokens. e)))
+   :event/choice-select-stats (fn [e] (handle-event (ChoiceSelectStats. e)))
+   :event/choice-select-start (fn [e] (handle-event (ChoiceSelectStart. e)))})
+
+(defn map-event-handler [e]
+  (let [event-type (:event/type e)
+        event (event-type event-handlers)]
+    (event e)))
